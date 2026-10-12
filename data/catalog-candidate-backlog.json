@@ -262,5 +262,65 @@
     "credit_card": "no",
     "commercial_use": "check",
     "last_checked": "2026-10-11"
+  },
+  {
+    "id": "memcachier-developer",
+    "name": "MemCachier Developer",
+    "category": "databases",
+    "plan": "ongoing",
+    "free_limit": "25 MB fully managed Memcached cache; 1 proxy server; 10 connections; basic analytics and 24/7 monitoring",
+    "watch_out": "Developer tier is aimed at development; high availability, alerting and unlimited connections require paid plans. Free-signup card requirement and commercial production rights are unconfirmed; unauthorized resale is prohibited.",
+    "pricing_url": "https://www.memcachier.com/pricing",
+    "credit_card": "check",
+    "commercial_use": "check",
+    "last_checked": "2026-10-10"
+  },
+  {
+    "id": "beeceptor-free",
+    "name": "Beeceptor Free",
+    "category": "developer-tools",
+    "plan": "ongoing",
+    "free_limit": "50 requests/day per public endpoint; 3 mock rules; 10 small CRUD objects; dynamic and conditional responses; ephemeral local tunnel",
+    "watch_out": "Free endpoints are public, with no SLA. Unclaimed endpoints are automatically deleted (official pages differ between 7 and 30 days); claimed endpoints expire 90 days after creation. Do not send sensitive payloads.",
+    "pricing_url": "https://beeceptor.com/pricing/",
+    "credit_card": "no",
+    "commercial_use": "yes",
+    "last_checked": "2026-10-10"
+  },
+  {
+    "id": "cloudamqp-little-lemur",
+    "name": "CloudAMQP Little Lemur",
+    "category": "queues-jobs",
+    "plan": "ongoing",
+    "free_limit": "Shared RabbitMQ broker; 1,000,000 messages/month; 20 connections; up to 100 queues and 10,000 queued messages",
+    "watch_out": "Free plan is intended for development; maximum idle queue time is 28 days. Free instances without published or consumed messages for two months are deleted after warning. Commercial production suitability not independently confirmed.",
+    "pricing_url": "https://www.cloudamqp.com/plans/",
+    "credit_card": "no",
+    "commercial_use": "check",
+    "last_checked": "2026-10-10"
+  },
+  {
+    "id": "redis-cloud-free",
+    "name": "Redis Cloud Free",
+    "category": "databases",
+    "plan": "ongoing",
+    "free_limit": "One free Redis Cloud database per account; 30 MB memory; 30 concurrent connections; 5 GB monthly network bandwidth; up to 100 operations/second (1 KiB requests)",
+    "watch_out": "Free Essentials is intended for learning and prototypes; shared deployment, best-effort SLA and community support. Network and throughput quotas apply; commercial production rights are not explicitly confirmed.",
+    "pricing_url": "https://redis.io/pricing/",
+    "credit_card": "no",
+    "commercial_use": "check",
+    "last_checked": "2026-10-11"
+  },
+  {
+    "id": "expo-push-service-free",
+    "name": "Expo Push Service Free",
+    "category": "developer-tools",
+    "plan": "ongoing",
+    "free_limit": "Free push notification delivery through Expo to FCM and APNs; 600 notifications/second per project; 100 notifications per API request",
+    "watch_out": "Requires valid Expo push tokens and platform push credentials; no delivery SLA or guarantee of receipt on the device; Expo Go on Android requires a development build for remote push notifications. Commercial-use terms not independently confirmed.",
+    "pricing_url": "https://docs.expo.dev/push-notifications/faq/",
+    "credit_card": "no",
+    "commercial_use": "check",
+    "last_checked": "2026-10-11"
   }
 ]
