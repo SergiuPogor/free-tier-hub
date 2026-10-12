@@ -322,5 +322,17 @@
     "credit_card": "no",
     "commercial_use": "check",
     "last_checked": "2026-10-11"
+  },
+  {
+    "id": "microsoft-clarity-free",
+    "name": "Microsoft Clarity Free",
+    "category": "observability",
+    "plan": "ongoing",
+    "free_limit": "Free forever: unlimited heatmaps, websites and team members; session recordings up to 100,000 sessions per project per day; click, scroll and area heatmaps",
+    "watch_out": "Recordings retained 30 days (selected recordings up to 9 months); not for sites/apps targeting under-18 users; comply with privacy and consent requirements. Data export API has separate quotas.",
+    "pricing_url": "https://clarity.microsoft.com/pricing",
+    "credit_card": "no",
+    "commercial_use": "yes",
+    "last_checked": "2026-10-12"
   }
 ]
