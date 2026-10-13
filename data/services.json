@@ -1488,5 +1488,41 @@
     "credit_card": "no",
     "commercial_use": "check",
     "last_checked": "2026-10-13"
+  },
+  {
+    "id": "chatgpt-free",
+    "name": "ChatGPT Free",
+    "category": "ai-assistants",
+    "plan": "ongoing",
+    "free_limit": "Free AI chat, web search and limited access to file uploads, image tools and data analysis",
+    "watch_out": "Message and tool limits vary; higher usage and advanced capabilities require paid plans. Consumer Free is not an API credit tier.",
+    "pricing_url": "https://openai.com/chatgpt/pricing/",
+    "credit_card": "no",
+    "commercial_use": "check",
+    "last_checked": "2026-10-13"
+  },
+  {
+    "id": "gemini-app-free",
+    "name": "Google Gemini App Free",
+    "category": "ai-assistants",
+    "plan": "ongoing",
+    "free_limit": "Free Gemini app with Google Account; AI chat, image creation, Gemini Live and limited Deep Research",
+    "watch_out": "Model and feature access varies by region and changes with demand; paid Google AI plans offer higher usage. Not the Gemini Developer API.",
+    "pricing_url": "https://gemini.google/subscriptions/",
+    "credit_card": "no",
+    "commercial_use": "check",
+    "last_checked": "2026-10-13"
+  },
+  {
+    "id": "perplexity-standard-free",
+    "name": "Perplexity Standard Free",
+    "category": "ai-assistants",
+    "plan": "ongoing",
+    "free_limit": "Practically unlimited basic searches with citations; limited Pro Searches and basic file uploads",
+    "watch_out": "Advanced models, image generation and premium features require paid plans; Pro Search quotas can change. Commercial-use eligibility must be checked.",
+    "pricing_url": "https://www.perplexity.ai/hub/pricing",
+    "credit_card": "no",
+    "commercial_use": "check",
+    "last_checked": "2026-10-13"
   }
 ]
