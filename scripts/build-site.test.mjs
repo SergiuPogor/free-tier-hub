@@ -17,7 +17,8 @@ test('directory exposes unique search/category controls and official sources for
       assert.equal(html.split(`id="${id}"`).length - 1, 1, `${id} must have one owner`);
     }
     assert.match(html, /<form[^>]+id="directory-search-form"[^>]+role="search"/);
-    assert.match(html, /type="submit"[^>]+class="search-submit"/);
+    assert.doesNotMatch(html, /class="search-submit"/);
+    assert.doesNotMatch(html, /aria-label="Quick billing filters"/);
     assert.match(html, /class="category-shortcuts"[^>]+aria-label="Popular categories"/);
     assert.doesNotMatch(html, /class="catalog-sidebar"/);
     assert.match(html, /class="catalog-toolbar"><div class="category-bar"/);
