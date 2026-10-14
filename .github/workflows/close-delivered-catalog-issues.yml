@@ -39,7 +39,7 @@ jobs:
               '-f', 'state=open', '-f', 'per_page=100', '-f', `page=${page}`], {encoding:'utf8'});
             const issues = JSON.parse(raw).filter(issue => !issue.pull_request);
             for (const issue of issues) {
-              const match = /^\\[catalog-candidate\\] ([a-z0-9]+(?:-[a-z0-9]+)*)$/.exec(issue.title);
+              const match = /^\[catalog-candidate\] ([a-z0-9]+(?:-[a-z0-9]+)*)$/.exec(issue.title);
               if (!match || !ids.has(match[1])) continue;
               let candidate;
               try { candidate = JSON.parse(issue.body || ''); } catch { continue; }
