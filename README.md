@@ -2,7 +2,7 @@
 
 **Build More, Spend Less.** A community-maintained directory of free hosting, cloud, databases, storage, serverless, AI and developer services.
 
-![Catalog](https://img.shields.io/badge/services-168-brightgreen) ![Data](https://img.shields.io/badge/catalog-JSON-blue) ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange)
+![Catalog](https://img.shields.io/badge/services-172-brightgreen) ![Data](https://img.shields.io/badge/catalog-JSON-blue) ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange)
 
 **Explore:** [free-tier.eplus.dev](https://free-tier.eplus.dev/) · [Search the catalog](https://free-tier.eplus.dev/#explore) · [Machine-readable JSON](https://free-tier.eplus.dev/catalog.json)
 
@@ -18,10 +18,10 @@
 | Cloud compute & VPS | 3 | [Browse](docs/cloud-vps.md) |
 | Databases & caching | 23 | [Browse](docs/databases.md) |
 | Object storage | 8 | [Browse](docs/storage.md) |
-| APIs & developer tools | 36 | [Browse](docs/developer-tools.md) |
+| APIs & developer tools | 37 | [Browse](docs/developer-tools.md) |
 | Authentication & security | 10 | [Browse](docs/auth-security.md) |
 | Monitoring & observability | 19 | [Browse](docs/observability.md) |
-| Product analytics | 3 | [Browse](docs/analytics.md) |
+| Product analytics | 6 | [Browse](docs/analytics.md) |
 | DNS & CDN | 2 | [Browse](docs/dns-cdn.md) |
 | AI & ML platforms | 7 | [Browse](docs/ai-ml.md) |
 | AI chatbots & assistants | 4 | [Browse](docs/ai-assistants.md) |
