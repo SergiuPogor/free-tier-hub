@@ -114,7 +114,7 @@
   var filterCount = document.getElementById("active-filter-count");
   function updateFilterCount() {
     if (!filterCount) return;
-    var count = Number(!!(noCard && noCard.checked)) + Number(!!(commercial && commercial.checked));
+    var count = Number(!!(noCard && noCard.checked)) + Number(!!(commercial && commercial.checked)) + Number(!!(mobileCategory && mobileCategory.value)) + Number(!!(sort && sort.value !== "default"));
     filterCount.textContent = String(count);
     filterCount.hidden = count === 0;
   }
@@ -241,6 +241,7 @@
     if (mobileCategory && mobileCategory.value !== category) {
       mobileCategory.value = category;
     }
+    updateFilterCount();
   }
   function changeCategory(next) {
     category = next;
@@ -268,6 +269,31 @@
     visible = pageSize; render();
     document.getElementById("explore").scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   });
+  // Move the existing category/sort controls into the panel on compact screens.
+  // One set of controls retains URL state, values and event listeners on resize.
+  if (advancedFilters && mobileCategory && sort && window.matchMedia) {
+    var controlHomes = [mobileCategory, sort].map(function (control) {
+      var label = control.closest("label");
+      var home = document.createComment("expanded filter position");
+      label.parentNode.insertBefore(home, label);
+      return { label: label, home: home };
+    });
+    var compactControls = window.matchMedia("(max-width: 980px)");
+    function placeCompactControls() {
+      controlHomes.forEach(function (item) {
+        if (compactControls.matches) advancedFilters.appendChild(item.label);
+        else item.home.parentNode.insertBefore(item.label, item.home.nextSibling);
+      });
+      if (!compactControls.matches) {
+        advancedFilters.hidden = true;
+        filterToggle.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("filter-sheet-open");
+      }
+    }
+    placeCompactControls();
+    if (compactControls.addEventListener) compactControls.addEventListener("change", placeCompactControls);
+    else compactControls.addListener(placeCompactControls);
+  }
   if (filterToggle && advancedFilters) {
     var sheetHeading = advancedFilters.querySelector(".filter-popover-heading");
     var closeSheetButton = document.createElement("button");

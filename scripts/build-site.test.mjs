@@ -21,7 +21,7 @@ test('directory exposes unique search/category controls and official sources for
     assert.match(html, /class="category-shortcuts"[^>]+aria-label="Popular categories"/);
     assert.doesNotMatch(html, /class="catalog-sidebar"/);
     assert.match(html, /class="catalog-toolbar"><div class="category-bar"/);
-    assert.match(html, /class="toolbar-results"><div class="directory-heading"/);
+    assert.match(html, /class="search-filter-row"><form class="hero-search directory-search"/);
     assert.doesNotMatch(html, /class="hero-discovery"/);
     assert.equal((html.match(/class="official-link"/g) || []).length, entries.length);
     assert.doesNotMatch(html, /href=""/);
