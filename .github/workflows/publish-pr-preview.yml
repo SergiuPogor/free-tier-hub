@@ -100,8 +100,16 @@ jobs:
             const {data:pr} = await github.rest.pulls.get({...context.repo,pull_number:number});
             if (pr.state !== 'open' || pr.head.sha !== process.env.HEAD_SHA) return;
             const url = 'https://free-tier.eplus.dev/pr-preview/pr-'+number+'/';
-            const response = await fetch(url+'preview-meta.json',{cache:'no-store'});
-            if (!response.ok || (await response.json()).head_sha !== process.env.HEAD_SHA) throw Error('Live preview is not serving this PR commit');
+            // Pages deployment may finish before the public CDN serves the new files.
+            let verified = false;
+            for (let attempt = 0; attempt < 12; attempt++) {
+              try {
+                const response = await fetch(url+'preview-meta.json?verify='+process.env.HEAD_SHA+'-'+Date.now(),{cache:'no-store',signal:AbortSignal.timeout(10000)});
+                if (response.ok && (await response.json()).head_sha === process.env.HEAD_SHA) {verified=true;break;}
+              } catch(error) {core.info('Preview propagation check: '+error.message);}
+              if (attempt < 11) await new Promise(resolve => setTimeout(resolve,5000));
+            }
+            if (!verified) throw Error('Live preview has not propagated to the CDN yet');
             const marker = '<!-- free-tier-hub-pr-preview -->';
             const body = [marker,'### Live PR design preview','**[Open preview in your browser]('+url+')**','',
               'Deployed commit: '+process.env.HEAD_SHA.slice(0,7)+'. Production is built from main; this preview is isolated under /pr-preview/.',
