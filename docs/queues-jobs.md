@@ -15,6 +15,7 @@ Queues, job orchestration and recurring HTTP triggers. [← Back to directory](.
 | [Trigger.dev Free](https://trigger.dev/pricing) | Recurring free credit | $5 recurring monthly compute/run credits; 20 concurrent runs; unlimited tasks; 10 schedules | Free credit covers metered compute and run invocation; execution stops or queues after credits run out until upgrade; 1-day log retention. | Check provider | Check provider |
 | [SimpleQ Free](https://simpleq.io/pricing) | Ongoing free allowance | 30,000 outbound webhook attempts/month; 5 queues; up to 5 attempts/job; 3-day job retention | Each dispatched webhook POST, including retries and backpressure responses, counts as an attempt; backpressure waiting is free. Commercial-use terms need confirmation. | Not required | Check provider |
 | [Windmill Cloud Community](https://www.windmill.dev/docs/getting_started/how_to_use_windmill) | Ongoing free allowance | 1,000 cloud executions/month; no credit card required | Cloud hosted in US; self-hosted Community Edition is a separate option; commercial-use conditions need confirmation. | Not required | Check provider |
+
 | [CloudAMQP Little Lemur](https://www.cloudamqp.com/plans/) | Ongoing free allowance | Free shared RabbitMQ: 1 million messages/month, 20 connections, up to 100 queues and 10,000 queued messages. | Development tier; 28-day idle queue time; unused instances may be deleted after two months of no activity. | Not required | Check provider |
 
 > **Important:** “Check provider” means card or commercial terms were not independently confirmed.
