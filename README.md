@@ -17,7 +17,7 @@
 | Serverless & edge | 3 | [Browse](docs/serverless.md) |
 | Cloud compute & VPS | 3 | [Browse](docs/cloud-vps.md) |
 | Databases & caching | 27 | [Browse](docs/databases.md) |
-| Object storage | 8 | [Browse](docs/storage.md) |
+| Object storage | 12 | [Browse](docs/storage.md) |
 | APIs & developer tools | 37 | [Browse](docs/developer-tools.md) |
 | Authentication & security | 15 | [Browse](docs/auth-security.md) |
 | Monitoring & observability | 25 | [Browse](docs/observability.md) |
@@ -26,8 +26,8 @@
 | AI & ML platforms | 7 | [Browse](docs/ai-ml.md) |
 | AI chatbots & assistants | 4 | [Browse](docs/ai-assistants.md) |
 | Queues, workflows & scheduling | 14 | [Browse](docs/queues-jobs.md) |
-| Hosted search | 3 | [Browse](docs/search.md) |
-| Feature flags & gradual rollout | 7 | [Browse](docs/feature-flags.md) |
+| Hosted search | 7 | [Browse](docs/search.md) |
+| Feature flags & gradual rollout | 12 | [Browse](docs/feature-flags.md) |
 | Tunneling & networking | 2 | [Browse](docs/tunneling-networking.md) |
 | Webhooks & event delivery | 9 | [Browse](docs/webhooks-events.md) |
 
