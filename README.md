@@ -2,7 +2,7 @@
 
 **Build More, Spend Less.** A community-maintained directory of free hosting, cloud, databases, storage, serverless, AI and developer services.
 
-![Catalog](https://img.shields.io/badge/services-172-brightgreen) ![Data](https://img.shields.io/badge/catalog-JSON-blue) ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange)
+![Catalog](https://img.shields.io/badge/services-212-brightgreen) ![Data](https://img.shields.io/badge/catalog-JSON-blue) ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange)
 
 **Explore:** [free-tier.eplus.dev](https://free-tier.eplus.dev/) · [Search the catalog](https://free-tier.eplus.dev/#explore) · [Machine-readable JSON](https://free-tier.eplus.dev/catalog.json)
 
@@ -16,20 +16,20 @@
 | Backend & app hosting | 12 | [Browse](docs/app-hosting.md) |
 | Serverless & edge | 3 | [Browse](docs/serverless.md) |
 | Cloud compute & VPS | 3 | [Browse](docs/cloud-vps.md) |
-| Databases & caching | 23 | [Browse](docs/databases.md) |
-| Object storage | 8 | [Browse](docs/storage.md) |
+| Databases & caching | 27 | [Browse](docs/databases.md) |
+| Object storage | 12 | [Browse](docs/storage.md) |
 | APIs & developer tools | 37 | [Browse](docs/developer-tools.md) |
-| Authentication & security | 10 | [Browse](docs/auth-security.md) |
-| Monitoring & observability | 19 | [Browse](docs/observability.md) |
-| Product analytics | 6 | [Browse](docs/analytics.md) |
+| Authentication & security | 15 | [Browse](docs/auth-security.md) |
+| Monitoring & observability | 25 | [Browse](docs/observability.md) |
+| Product analytics | 12 | [Browse](docs/analytics.md) |
 | DNS & CDN | 2 | [Browse](docs/dns-cdn.md) |
 | AI & ML platforms | 7 | [Browse](docs/ai-ml.md) |
 | AI chatbots & assistants | 4 | [Browse](docs/ai-assistants.md) |
-| Queues, workflows & scheduling | 10 | [Browse](docs/queues-jobs.md) |
-| Hosted search | 3 | [Browse](docs/search.md) |
-| Feature flags & gradual rollout | 7 | [Browse](docs/feature-flags.md) |
+| Queues, workflows & scheduling | 14 | [Browse](docs/queues-jobs.md) |
+| Hosted search | 7 | [Browse](docs/search.md) |
+| Feature flags & gradual rollout | 12 | [Browse](docs/feature-flags.md) |
 | Tunneling & networking | 2 | [Browse](docs/tunneling-networking.md) |
-| Webhooks & event delivery | 7 | [Browse](docs/webhooks-events.md) |
+| Webhooks & event delivery | 9 | [Browse](docs/webhooks-events.md) |
 
 ## Choose a free-tier service
 
