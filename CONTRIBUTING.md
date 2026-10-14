@@ -7,7 +7,7 @@ There are **two ways to contribute**. You do not need to know Git, Node.js, or J
 ## Option A: Suggest a service without code (recommended for beginners)
 
 1. [Open the service suggestion form](https://github.com/ePlus-DEV/free-tier-hub/issues/new?template=suggest-service.yml).
-2. Enter the provider and exact free plan/product, an official pricing or documentation link, and whether you want to add, update, or remove an entry.
+2. Enter the provider and exact free plan/product, an official pricing or documentation link, and whether you want to add, update, remove an entry, or correct its logo/category.
 3. Include the free allowance **with units and reset period**, relevant restrictions, and the date you personally checked the source. If you cannot confirm a condition, say so rather than guessing.
 4. Submit the Issue. Maintainers will verify the information and make the catalog/code changes if accepted.
 
@@ -19,7 +19,7 @@ Use this route if you want to edit the catalog yourself. Install **Node.js 24 LT
 
 1. [Fork this repository](https://github.com/ePlus-DEV/free-tier-hub/fork) and clone **your fork**. Create a feature branch from its latest `main`, such as `catalog/add-example-free`.
 2. In **`data/services.json`**, add or update one entry, using the [fields](#catalog-fields) below and the provider's current official source. Check whether the entry already exists, even under a slightly different name. Use the actual verification date in `last_checked`.
-3. **Only edit the catalog JSON by hand for a standard service addition.** Do not manually edit generated README/category tables or add a `SERVICE_LOGOS` mapping just to supply a fallback logo. The site uses the service initials automatically when no curated logo exists.
+3. **Only edit the catalog JSON by hand for a standard service addition.** Do not manually edit generated README/category tables. Provider logos are resolved automatically from the official `pricing_url` domain; standard additions do not require a logo file or mapping.
 4. From the repository root, generate and validate the derived files:
 
    ```bash
@@ -51,6 +51,14 @@ Use this route if you want to edit the catalog yourself. Install **Node.js 24 LT
 - Explain any billing-account/card requirement, region or commercial-use restrictions, expiration/idle/sleep behavior, and chargeable overages.
 - If the official source conflicts with an existing row, update its claims and review date; do not silently omit caveats.
 - Keep descriptions concise, factual, and in English. Do not submit secrets or personal account credentials.
+
+## Logos, categories, and website reports
+
+- **Logos:** the site displays provider website favicons through Google's favicon cache. Keep `pricing_url` pointed at the official plan evidence, even if that page is hosted on a documentation or corporate domain. Do not change a pricing source just to change its logo.
+- If a shared domain displays the wrong product logo, report the service ID/name and its official product homepage. Maintainers can add a `SERVICE_LOGO_DOMAINS` override in `scripts/site-data.mjs`. Do not add an unsupported `logo_url` field to the catalog. A generic icon can mean the provider has no indexed favicon; initials are a network-error fallback.
+- **Categories:** use an existing category from `scripts/catalog.mjs` for normal additions. The site generates the full category dropdown automatically. New categories require coordinated updates to catalog validation, site labels/icons and generated documentation; propose them in an Issue first.
+- **Share a filtered view:** select the relevant category and filters, then copy the current URL. Query parameters are `category`, `q`, `sort`, `no_card=1`, and `commercial=1`. The site restores these selections when a shared link is opened or reloaded. Include this URL when reporting a filtering problem.
+- For website UI changes, also run `npm run build` after `npm run verify`. Check desktop/mobile, light/dark themes, category and billing filters, URL restoration after reload, and sticky toolbar behavior before considering visual review complete.
 
 ## Catalog fields
 
