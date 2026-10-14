@@ -2,7 +2,7 @@
 
 **Build More, Spend Less.** A community-maintained directory of free hosting, cloud, databases, storage, serverless, AI and developer services.
 
-![Catalog](https://img.shields.io/badge/services-132-brightgreen) ![Data](https://img.shields.io/badge/catalog-JSON-blue) ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange)
+![Catalog](https://img.shields.io/badge/services-146-brightgreen) ![Data](https://img.shields.io/badge/catalog-JSON-blue) ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-orange)
 
 **Explore:** [free-tier.eplus.dev](https://free-tier.eplus.dev/) · [Search the catalog](https://free-tier.eplus.dev/#explore) · [Machine-readable JSON](https://free-tier.eplus.dev/catalog.json)
 
@@ -16,14 +16,14 @@
 | Backend & app hosting | 11 | [Browse](docs/app-hosting.md) |
 | Serverless & edge | 3 | [Browse](docs/serverless.md) |
 | Cloud compute & VPS | 3 | [Browse](docs/cloud-vps.md) |
-| Databases & caching | 20 | [Browse](docs/databases.md) |
-| Object storage | 6 | [Browse](docs/storage.md) |
-| APIs & developer tools | 25 | [Browse](docs/developer-tools.md) |
-| Authentication & security | 5 | [Browse](docs/auth-security.md) |
-| Monitoring & observability | 13 | [Browse](docs/observability.md) |
+| Databases & caching | 21 | [Browse](docs/databases.md) |
+| Object storage | 8 | [Browse](docs/storage.md) |
+| APIs & developer tools | 30 | [Browse](docs/developer-tools.md) |
+| Authentication & security | 6 | [Browse](docs/auth-security.md) |
+| Monitoring & observability | 17 | [Browse](docs/observability.md) |
 | Product analytics | 2 | [Browse](docs/analytics.md) |
 | DNS & CDN | 2 | [Browse](docs/dns-cdn.md) |
-| AI & ML platforms | 4 | [Browse](docs/ai-ml.md) |
+| AI & ML platforms | 5 | [Browse](docs/ai-ml.md) |
 | AI chatbots & assistants | 4 | [Browse](docs/ai-assistants.md) |
 | Queues, workflows & scheduling | 9 | [Browse](docs/queues-jobs.md) |
 | Hosted search | 3 | [Browse](docs/search.md) |
