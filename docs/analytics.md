@@ -10,4 +10,8 @@ Understand product usage and experiments within recurring free quotas. [← Back
 | [PostHog Free](https://posthog.com/pricing) | Ongoing free allowance | 1M product analytics events/month; 5k session recordings/month; 1M feature flag requests | Free without a card for one project; usage stops at limits unless billing is enabled. | Not required | Allowed |
 | [Microsoft Clarity Free](https://clarity.microsoft.com/pricing) | Ongoing free allowance | Free forever: unlimited website traffic, heatmaps, session recordings, websites and team members. | Privacy, consent and applicable data-protection requirements remain the site owner's responsibility. | Check provider | Allowed |
 
+| [Amplitude Free](https://amplitude.com/pricing) | Ongoing free allowance | 2 million events/month; 10,000 session replays/month; unlimited seats. | Advanced analytics and longer retention require paid tiers. | Not required | Check provider |
+| [Mixpanel Free](https://mixpanel.com/pricing/) | Ongoing free allowance | 1 million events/month; 10,000 session replays/month; up to 10 active feature flags. | Free event and experimentation quotas apply; higher usage and advanced reports require paid tiers. | Not required | Check provider |
+| [Umami Cloud Hobby](https://docs.umami.is/docs/cloud/faq) | Ongoing free allowance | Ongoing free Hobby plan for personal projects and low-traffic websites. | Monthly usage quotas apply; verify current event allowance before relying on the service. | Check provider | Check provider |
+
 > **Important:** “Check provider” indicates that the catalog does not independently confirm that term; do not assume a feature or quota is unrestricted.
