@@ -120,7 +120,7 @@ function document(absolute, title, description, relative, content, structuredDat
     '<span class="brand-wordmark"><span>Free Tier <strong>Hub</strong></span>',
     '<small>by ePlus-DEV</small></span></a>',
     '<nav class="primary-nav" id="primary-nav" aria-label="Main navigation">',
-    '<a href="', tag(absolute()), '">Discover</a>',
+    '<a href="', tag(absolute()), '"', relative === '' ? ' aria-current="page"' : '', '>Discover</a>',
     '<a href="', tag(absolute('#explore')), '">Categories</a>',
     '<a href="', tag(REPOSITORY + '/blob/main/CONTRIBUTING.md'), '">Contribute</a></nav>',
     '<div class="header-actions">',
@@ -172,13 +172,13 @@ function homePage(items, absolute, counts) {
   const cards = items.map(item => card(item, absolute)).join('');
   const options = CATEGORIES.map(category =>
     '<option value="' + tag(category) + '">' + tag(CATEGORY_NAMES[category]) + '</option>').join('');
-  const shortcuts = [['', 'All services'], ['static-hosting', 'Hosting'], ['databases', 'Databases'], ['ai-assistants', 'AI assistants'], ['storage', 'Storage']].map(([category, label]) =>
+  const shortcuts = [['', 'All services'], ['static-hosting', 'Hosting'], ['databases', 'Databases'], ['ai-assistants', 'AI assistants'], ['storage', 'Storage'], ['developer-tools', 'Developer tools']].map(([category, label]) =>
     '<button type="button" class="category-chip" data-filter-category="' + tag(category) + '" aria-pressed="' + (category === '' ? 'true' : 'false') + '">' + tag(label) + '</button>').join('');
   return [
     '<section class="hero"><div class="hero-copy">',
     '<p class="hero-kicker">The free-tier directory</p>',
-    '<h1>Your next project starts here.</h1>',
-    '<p>Discover free services. Compare limits. Build with confidence.</p>',
+    '<h1>Find the right tools. Build for free.</h1>',
+    '<p>Compare free services, limits and conditions.</p>',
     '</div></section><section id="explore" class="section catalog-section">',
     '<div class="catalog-layout">',
     '<div class="catalog-main"><div class="catalog-toolbar">',
@@ -203,20 +203,22 @@ function homePage(items, absolute, counts) {
     '<div class="filter-popover-wrap">',
     '<button class="advanced-filter-toggle" id="advanced-filter-toggle" type="button" ',
     'aria-expanded="false" aria-controls="advanced-filters">',
-    glyph('grid'), ' <span>Filter</span><span id="active-filter-count" class="active-filter-count" hidden>0</span></button>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="2" fill="var(--surface)"/><circle cx="15" cy="17" r="2" fill="var(--surface)"/></svg>', ' <span>Filters</span><span id="active-filter-count" class="active-filter-count" hidden>0</span></button>',
     '<div class="filter-checks" id="advanced-filters" role="group" aria-label="Additional filters" hidden>',
     '<div class="filter-popover-heading"><strong>Refine results</strong><span>Only show services that match</span></div>',
     '<label><input id="filter-no-card" type="checkbox"><span class="filter-option-copy">',
     '<strong>No credit card</strong><small>Start without adding a payment card</small></span></label>',
     '<label><input id="filter-commercial" type="checkbox"><span class="filter-option-copy">',
     '<strong>Commercial use</strong><small>Permitted for commercial projects</small></span></label>',
-    '</div></div></div></div></div>',
+    '<button type="button" class="filter-show-results" id="filter-show-results">Show results</button>',
+    '</div></div></div></div>',
+    '<div class="active-filters" id="active-filters" hidden><div id="active-filter-chips" class="active-filter-chips" aria-label="Active filters"></div>',
+    '<button id="clear-filters" class="clear-filters" type="button">Clear</button></div></div>',
     '<div class="directory-heading">',
     '<h2>Explore services</h2><div class="results-meta">',
     '<p class="result-count" id="results-count" aria-live="polite">Showing ',
     items.length, ' services</p>',
-    '<button id="clear-filters" class="clear-filters" type="button" hidden>',
-    'Clear filters</button></div></div>',
+    '</div></div>',
     '<div class="service-grid" id="service-grid">', cards, '</div>',
     '<div class="load-more-wrap" id="load-more-wrap" hidden>',
     '<button class="load-more" type="button" id="load-more">Show more services</button>',

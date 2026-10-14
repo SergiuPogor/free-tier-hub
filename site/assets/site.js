@@ -202,6 +202,50 @@
     }
     matched.forEach(function (card) { grid.appendChild(card); });
   }
+  var activeFilters = document.getElementById("active-filters");
+  var activeChips = document.getElementById("active-filter-chips");
+  var showResults = document.getElementById("filter-show-results");
+  function renderActiveFilters() {
+    if (!activeChips) return;
+    activeChips.replaceChildren();
+    var selected = [];
+    if (search.value.trim()) selected.push(["q", 'Search: ' + search.value.trim()]);
+    if (category) selected.push(["category", mobileCategory.options[mobileCategory.selectedIndex].text]);
+    if (noCard.checked) selected.push(["no-card", "No credit card"]);
+    if (commercial.checked) selected.push(["commercial", "Commercial use"]);
+    if (sort.value !== "default") selected.push(["sort", sort.options[sort.selectedIndex].text]);
+    selected.forEach(function (item) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "active-filter-chip";
+      button.dataset.removeFilter = item[0];
+      button.setAttribute("aria-label", "Remove filter: " + item[1]);
+      var label = document.createElement("span");
+      label.textContent = item[1];
+      var icon = document.createElement("span");
+      icon.textContent = "×";
+      icon.setAttribute("aria-hidden", "true");
+      button.append(label, icon);
+      activeChips.appendChild(button);
+    });
+    activeFilters.hidden = selected.length === 0;
+  }
+  if (activeChips) activeChips.addEventListener("click", function (event) {
+    var button = event.target.closest("[data-remove-filter]");
+    if (!button) return;
+    var key = button.dataset.removeFilter;
+    if (key === "q") {
+      search.value = "";
+      if (headerSearch) headerSearch.value = "";
+    } else if (key === "category") category = "";
+    else if (key === "sort") sort.value = "default";
+    else if (key === "no-card") noCard.checked = false;
+    else if (key === "commercial") commercial.checked = false;
+    visible = pageSize;
+    render();
+    var next = activeChips.querySelector("button");
+    (next || search).focus();
+  });
   function render() {
     syncURL();
     document.querySelectorAll("[data-quick-filter]").forEach(function (button) {
@@ -242,6 +286,8 @@
       mobileCategory.value = category;
     }
     updateFilterCount();
+    renderActiveFilters();
+    if (showResults) showResults.textContent = "Show results (" + matched.length + ")";
   }
   function changeCategory(next) {
     category = next;
@@ -281,7 +327,7 @@
     var compactControls = window.matchMedia("(max-width: 980px)");
     function placeCompactControls() {
       controlHomes.forEach(function (item) {
-        if (compactControls.matches) advancedFilters.appendChild(item.label);
+        if (compactControls.matches) advancedFilters.insertBefore(item.label, advancedFilters.querySelector("label:has(input[type=checkbox])"));
         else item.home.parentNode.insertBefore(item.label, item.home.nextSibling);
       });
       if (!compactControls.matches) {
@@ -339,6 +385,7 @@
         closeSheetButton.focus();
       }
     }
+    if (showResults) showResults.addEventListener("click", function () { closeFilters(true); });
     closeSheetButton.addEventListener("click", function () { closeFilters(true); });
     sheetBackdrop.addEventListener("click", function () { closeFilters(true); });
     document.addEventListener("keydown", function (event) {
