@@ -10,6 +10,16 @@ test('directory exposes unique search/category controls and official sources for
   try {
     const result = build(output);
     const html = fs.readFileSync(path.join(output, 'index.html'), 'utf8');
+    const imageURL = 'https://free-tier.eplus.dev/assets/og-image.png';
+    for (const page of [html, fs.readFileSync(path.join(output, 'service/chatgpt-free/index.html'), 'utf8')]) {
+      assert.ok(page.includes(`<meta property="og:image" content="${imageURL}">`));
+      assert.ok(page.includes(`<meta name="twitter:image" content="${imageURL}">`));
+      assert.match(page, /name="twitter:card" content="summary_large_image"/);
+    }
+    const png = fs.readFileSync(path.join(output, 'assets/og-image.png'));
+    assert.equal(png.subarray(1, 4).toString(), 'PNG');
+    assert.equal(png.readUInt32BE(16), 1200);
+    assert.equal(png.readUInt32BE(20), 630);
     const raw = JSON.parse(fs.readFileSync(new URL('../data/services.json', import.meta.url), 'utf8'));
     const entries = Array.isArray(raw) ? raw : raw.services;
     assert.equal(result.service_count, entries.length);

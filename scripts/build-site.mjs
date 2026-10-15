@@ -98,7 +98,14 @@ function document(absolute, title, description, relative, content, structuredDat
     '<meta property="og:title" content="', tag(title), '">',
     '<meta property="og:description" content="', tag(description), '">',
     '<meta property="og:url" content="', tag(canonical), '">',
-    '<meta name="twitter:card" content="summary">',
+    '<meta property="og:image" content="', tag(absolute('assets/og-image.png')), '">',
+    '<meta property="og:image:type" content="image/png">',
+    '<meta property="og:image:width" content="1200">',
+    '<meta property="og:image:height" content="630">',
+    '<meta property="og:image:alt" content="Free Tier Hub — Find the right tools. Build for free.">',
+    '<meta name="twitter:card" content="summary_large_image">',
+    '<meta name="twitter:image" content="', tag(absolute('assets/og-image.png')), '">',
+    '<meta name="twitter:image:alt" content="Free Tier Hub — Find the right tools. Build for free.">',
     '<link rel="icon" type="image/svg+xml" href="', tag(absolute('assets/icon.svg')), '">',
     '<link rel="preconnect" href="https://fonts.googleapis.com">',
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
@@ -413,7 +420,7 @@ export function build(outputDir = path.join(ROOT, 'dist'), siteURL = DEFAULT_URL
   ];
   file(output, 'agents.md', agents.join('\n') + '\n');
   file(output, 'catalog.json', JSON.stringify(items, null, 2) + '\n');
-  for (const name of ['site.css', 'directory-url.js', 'site.js', 'icon.svg']) {
+  for (const name of ['site.css', 'directory-url.js', 'site.js', 'icon.svg', 'og-image.png', 'og-image.svg']) {
     const dest = path.join(output, 'assets', name);
     fs.mkdirSync(path.dirname(dest), { recursive: true });
     fs.copyFileSync(path.join(ROOT, 'site/assets', name), dest);
