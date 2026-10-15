@@ -79,6 +79,7 @@
   var headerToggle = document.getElementById("header-search-toggle");
   var headerPanel = document.getElementById("header-search-panel");
   var headerSearch = document.getElementById("header-search");
+  var headerSearchForm = document.getElementById("header-search-form");
   function closeHeaderSearch() {
     if (!headerPanel || !headerToggle) return;
     headerPanel.hidden = true;
@@ -86,10 +87,6 @@
   }
   if (headerToggle && headerPanel && headerSearch) {
     headerToggle.addEventListener("click", function () {
-      if (!document.getElementById("search")) {
-        window.location.href = headerToggle.getAttribute("data-directory-url");
-        return;
-      }
       var opening = headerPanel.hidden;
       headerPanel.hidden = !opening;
       headerToggle.setAttribute("aria-expanded", String(opening));
@@ -106,6 +103,28 @@
           !headerToggle.contains(event.target)) closeHeaderSearch();
     });
   }
+  // Register global search before the directory-only early return below.
+  if (headerSearchForm) headerSearchForm.addEventListener("submit", function (event) {
+    var directorySearch = document.getElementById("search");
+    var directoryForm = document.getElementById("directory-search-form");
+    // Other pages use the form's GET action, including isolated PR previews.
+    if (!directorySearch || !directoryForm) return;
+    event.preventDefault();
+    directorySearch.value = headerSearch.value;
+    directoryForm.requestSubmit();
+    closeHeaderSearch();
+  });
+  document.addEventListener("keydown", function (event) {
+    var target = event.target;
+    var editing = target && (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName));
+    if ((event.key === "/" && !editing) || ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k")) {
+      if (!headerToggle || !headerPanel || !headerSearch) return;
+      event.preventDefault();
+      headerPanel.hidden = false;
+      headerToggle.setAttribute("aria-expanded", "true");
+      headerSearch.focus(); headerSearch.select();
+    }
+  });
   var search = document.getElementById("search");
   var heroSearch = document.getElementById("hero-search");
   var filterToggle = document.getElementById("advanced-filter-toggle");
@@ -467,25 +486,11 @@
     });
   });
   document.addEventListener("keydown", function (event) {
-    var node = event.target && event.target.tagName;
-    var editable = event.target && event.target.isContentEditable;
     if (event.key === "Escape" && document.activeElement === search) {
       search.value = "";
       visible = pageSize;
       render();
       search.blur();
-    } else if ((event.key === "/" && !editable && node !== "INPUT" &&
-                node !== "TEXTAREA" && node !== "SELECT") ||
-               ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k")) {
-      event.preventDefault();
-      if (headerToggle && headerPanel && headerSearch) {
-        headerPanel.hidden = false;
-        headerToggle.setAttribute("aria-expanded", "true");
-        headerSearch.focus(); headerSearch.select();
-      } else {
-        window.location.hash = "#explore";
-        search.focus(); search.select();
-      }
     }
   });
   restoreURL();

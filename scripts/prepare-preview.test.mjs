@@ -25,6 +25,7 @@ test('preview localizes nested links, keeps production canonical, removes analyt
     fs.writeFileSync(path.join(detail, 'index.html'),
       '<link rel="canonical" href="' + URL + 'service/vercel/">' +
       '<a href="' + URL + '">Home</a>' +
+      '<form method="get" action="' + URL + '#explore"><input name="q"></form>' +
       '<link rel="stylesheet" href="' + URL + 'assets/site.css">' +
       "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9YPGG0XEZV');</script>");
     assert.equal(prepare(root, URL), 2);
@@ -36,6 +37,7 @@ test('preview localizes nested links, keeps production canonical, removes analyt
     assert.match(home, /rel="canonical" href="https:\/\/free-tier\.eplus\.dev\/"/);
     assert.match(page, /href="\.\.\/\.\.\/assets\/site\.css"/);
     assert.match(page, /href="\.\.\/\.\.\/index\.html"/);
+    assert.ok(page.includes('action="../../index.html#explore"'));
     assert.match(page, /rel="canonical" href="https:\/\/free-tier\.eplus\.dev\/service\/vercel\/"/);
     assert.match(home, /name="robots" content="noindex,nofollow"/);
     assert.doesNotMatch(home, /googletagmanager\.com/);

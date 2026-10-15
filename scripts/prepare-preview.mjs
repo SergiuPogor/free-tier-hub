@@ -21,7 +21,7 @@ export function prepare(site, baseURL) {
   if (!pages.length || !fs.existsSync(path.join(root, 'assets/site.css'))) {
     throw Error('Missing generated site or stylesheet');
   }
-  const localLinks = new RegExp('((?:href|src)=")' + escapeRegex(baseURL) + '([^"]*)(")', 'g');
+  const localLinks = new RegExp('((?:href|src|action)=")' + escapeRegex(baseURL) + '([^"]*)(")', 'g');
   for (const page of pages) {
     let content = fs.readFileSync(page, 'utf8');
     const canonical = content.match(/<link rel="canonical" href="([^"]+)">/)?.[1];
