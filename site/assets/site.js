@@ -205,6 +205,21 @@
   var activeFilters = document.getElementById("active-filters");
   var activeChips = document.getElementById("active-filter-chips");
   var showResults = document.getElementById("filter-show-results");
+  // On phones only the search row and slim category tabs stay sticky.
+  // Keep selected chips in normal flow so a long filter set cannot cover cards.
+  if (activeFilters && window.matchMedia) {
+    var chipHome = document.createComment("expanded active filters position");
+    activeFilters.parentNode.insertBefore(chipHome, activeFilters);
+    var compactSticky = window.matchMedia("(max-width: 680px)");
+    function placeActiveFilters() {
+      var toolbar = chipHome.parentNode;
+      if (compactSticky.matches) toolbar.insertAdjacentElement("afterend", activeFilters);
+      else toolbar.insertBefore(activeFilters, chipHome.nextSibling);
+    }
+    placeActiveFilters();
+    if (compactSticky.addEventListener) compactSticky.addEventListener("change", placeActiveFilters);
+    else compactSticky.addListener(placeActiveFilters);
+  }
   function renderActiveFilters() {
     if (!activeChips) return;
     activeChips.replaceChildren();
