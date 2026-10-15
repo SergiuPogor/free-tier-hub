@@ -98,7 +98,14 @@ function document(absolute, title, description, relative, content, structuredDat
     '<meta property="og:title" content="', tag(title), '">',
     '<meta property="og:description" content="', tag(description), '">',
     '<meta property="og:url" content="', tag(canonical), '">',
-    '<meta name="twitter:card" content="summary">',
+    '<meta property="og:image" content="', tag(absolute('assets/og-image.png')), '">',
+    '<meta property="og:image:type" content="image/png">',
+    '<meta property="og:image:width" content="1200">',
+    '<meta property="og:image:height" content="630">',
+    '<meta property="og:image:alt" content="Free Tier Hub — Find the right tools. Build for free.">',
+    '<meta name="twitter:card" content="summary_large_image">',
+    '<meta name="twitter:image" content="', tag(absolute('assets/og-image.png')), '">',
+    '<meta name="twitter:image:alt" content="Free Tier Hub — Find the right tools. Build for free.">',
     '<link rel="icon" type="image/svg+xml" href="', tag(absolute('assets/icon.svg')), '">',
     '<link rel="preconnect" href="https://fonts.googleapis.com">',
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
@@ -120,7 +127,7 @@ function document(absolute, title, description, relative, content, structuredDat
     '<span class="brand-wordmark"><span>Free Tier <strong>Hub</strong></span>',
     '<small>by ePlus-DEV</small></span></a>',
     '<nav class="primary-nav" id="primary-nav" aria-label="Main navigation">',
-    '<a href="', tag(absolute()), '">Discover</a>',
+    '<a href="', tag(absolute()), '"', relative === '' ? ' aria-current="page"' : '', '>Discover</a>',
     '<a href="', tag(absolute('#explore')), '">Categories</a>',
     '<a href="', tag(REPOSITORY + '/blob/main/CONTRIBUTING.md'), '">Contribute</a></nav>',
     '<div class="header-actions">',
@@ -172,33 +179,26 @@ function homePage(items, absolute, counts) {
   const cards = items.map(item => card(item, absolute)).join('');
   const options = CATEGORIES.map(category =>
     '<option value="' + tag(category) + '">' + tag(CATEGORY_NAMES[category]) + '</option>').join('');
-  const shortcuts = [['', 'All services'], ['static-hosting', 'Hosting'], ['databases', 'Databases'], ['ai-assistants', 'AI assistants'], ['storage', 'Storage']].map(([category, label]) =>
+  const shortcuts = [['', 'All services'], ['static-hosting', 'Hosting'], ['databases', 'Databases'], ['ai-assistants', 'AI assistants'], ['storage', 'Storage'], ['developer-tools', 'Developer tools']].map(([category, label]) =>
     '<button type="button" class="category-chip" data-filter-category="' + tag(category) + '" aria-pressed="' + (category === '' ? 'true' : 'false') + '">' + tag(label) + '</button>').join('');
   return [
     '<section class="hero"><div class="hero-copy">',
     '<p class="hero-kicker">The free-tier directory</p>',
-    '<h1>Your next project starts here.</h1>',
-    '<p>Discover free services. Compare limits. Build with confidence.</p>',
-    '<form class="hero-search" id="directory-search-form" role="search"><label class="sr-only" for="search">Search free tiers</label>',
-    glyph('search'), '<input id="search" type="search" autocomplete="off" ',
-    'placeholder="Search services, categories, or keywords" aria-controls="service-grid">',
-    '<button type="submit" class="search-submit">Search</button></form>',
+    '<h1>Find the right tools. Build for free.</h1>',
+    '<p>Compare free services, limits and conditions.</p>',
     '</div></section><section id="explore" class="section catalog-section">',
     '<div class="catalog-layout">',
     '<div class="catalog-main"><div class="catalog-toolbar">',
     '<div class="category-bar"><div class="category-shortcuts" role="group" aria-label="Popular categories">', shortcuts, '</div>',
-    '<label class="all-categories" for="category-filter"><span class="sr-only">All categories</span>',
-    '<select id="category-filter"><option value="">All categories</option>', options, '</select></label></div>',
-    '<div class="toolbar-results"><div class="directory-heading">',
-    '<h2>Explore services</h2><div class="results-meta">',
-    '<p class="result-count" id="results-count" aria-live="polite">Showing ',
-    items.length, ' services</p>',
-    '<button id="clear-filters" class="clear-filters" type="button" hidden>',
-    'Clear filters</button></div></div><div class="filters">',
-    '<div class="quick-filters" aria-label="Quick billing filters">',
-        '<button type="button" data-quick-filter="no-card" aria-pressed="false">No credit card</button>',
-    '<button type="button" data-quick-filter="commercial" aria-pressed="false">Commercial use</button>',
     '</div>',
+    '<div class="search-filter-row">',
+    '<form class="hero-search directory-search" id="directory-search-form" role="search"><label class="sr-only" for="search">Search free tiers</label>',
+    glyph('search'), '<input id="search" type="search" autocomplete="off" ',
+    'placeholder="Search services, categories, or keywords" aria-controls="service-grid">',
+    '</form>',
+    '<label class="all-categories" for="category-filter"><span class="sr-only">All categories</span>',
+    '<select id="category-filter"><option value="">All categories</option>', options, '</select></label>',
+    '<div class="filters">',
     '<label class="sort-field" for="sort"><span class="sr-only">Sort by</span><select id="sort">',
     '<option value="default">Catalog order</option>',
     '<option value="newest">Newest added</option>',
@@ -210,14 +210,22 @@ function homePage(items, absolute, counts) {
     '<div class="filter-popover-wrap">',
     '<button class="advanced-filter-toggle" id="advanced-filter-toggle" type="button" ',
     'aria-expanded="false" aria-controls="advanced-filters">',
-    glyph('grid'), ' <span>Filters</span><span id="active-filter-count" class="active-filter-count" hidden>0</span></button>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="2" fill="var(--surface)"/><circle cx="15" cy="17" r="2" fill="var(--surface)"/></svg>', ' <span>Filters</span><span id="active-filter-count" class="active-filter-count" hidden>0</span></button>',
     '<div class="filter-checks" id="advanced-filters" role="group" aria-label="Additional filters" hidden>',
     '<div class="filter-popover-heading"><strong>Refine results</strong><span>Only show services that match</span></div>',
     '<label><input id="filter-no-card" type="checkbox"><span class="filter-option-copy">',
     '<strong>No credit card</strong><small>Start without adding a payment card</small></span></label>',
     '<label><input id="filter-commercial" type="checkbox"><span class="filter-option-copy">',
     '<strong>Commercial use</strong><small>Permitted for commercial projects</small></span></label>',
-    '</div></div></div></div></div>',
+    '<button type="button" class="filter-show-results" id="filter-show-results">Show results</button>',
+    '</div></div></div></div>',
+    '<div class="active-filters" id="active-filters" hidden><div id="active-filter-chips" class="active-filter-chips" aria-label="Active filters"></div>',
+    '<button id="clear-filters" class="clear-filters" type="button">Clear</button></div></div>',
+    '<div class="directory-heading">',
+    '<h2>Explore services</h2><div class="results-meta">',
+    '<p class="result-count" id="results-count" aria-live="polite">Showing ',
+    items.length, ' services</p>',
+    '</div></div>',
     '<div class="service-grid" id="service-grid">', cards, '</div>',
     '<div class="load-more-wrap" id="load-more-wrap" hidden>',
     '<button class="load-more" type="button" id="load-more">Show more services</button>',
@@ -412,7 +420,7 @@ export function build(outputDir = path.join(ROOT, 'dist'), siteURL = DEFAULT_URL
   ];
   file(output, 'agents.md', agents.join('\n') + '\n');
   file(output, 'catalog.json', JSON.stringify(items, null, 2) + '\n');
-  for (const name of ['site.css', 'directory-url.js', 'site.js', 'icon.svg']) {
+  for (const name of ['site.css', 'directory-url.js', 'site.js', 'icon.svg', 'og-image.png', 'og-image.svg']) {
     const dest = path.join(output, 'assets', name);
     fs.mkdirSync(path.dirname(dest), { recursive: true });
     fs.copyFileSync(path.join(ROOT, 'site/assets', name), dest);

@@ -114,7 +114,7 @@
   var filterCount = document.getElementById("active-filter-count");
   function updateFilterCount() {
     if (!filterCount) return;
-    var count = Number(!!(noCard && noCard.checked)) + Number(!!(commercial && commercial.checked));
+    var count = Number(!!(noCard && noCard.checked)) + Number(!!(commercial && commercial.checked)) + Number(!!(mobileCategory && mobileCategory.value)) + Number(!!(sort && sort.value !== "default"));
     filterCount.textContent = String(count);
     filterCount.hidden = count === 0;
   }
@@ -202,6 +202,50 @@
     }
     matched.forEach(function (card) { grid.appendChild(card); });
   }
+  var activeFilters = document.getElementById("active-filters");
+  var activeChips = document.getElementById("active-filter-chips");
+  var showResults = document.getElementById("filter-show-results");
+  function renderActiveFilters() {
+    if (!activeChips) return;
+    activeChips.replaceChildren();
+    var selected = [];
+    if (search.value.trim()) selected.push(["q", 'Search: ' + search.value.trim()]);
+    if (category) selected.push(["category", mobileCategory.options[mobileCategory.selectedIndex].text]);
+    if (noCard.checked) selected.push(["no-card", "No credit card"]);
+    if (commercial.checked) selected.push(["commercial", "Commercial use"]);
+    if (sort.value !== "default") selected.push(["sort", sort.options[sort.selectedIndex].text]);
+    selected.forEach(function (item) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "active-filter-chip";
+      button.dataset.removeFilter = item[0];
+      button.setAttribute("aria-label", "Remove filter: " + item[1]);
+      var label = document.createElement("span");
+      label.textContent = item[1];
+      var icon = document.createElement("span");
+      icon.textContent = "×";
+      icon.setAttribute("aria-hidden", "true");
+      button.append(label, icon);
+      activeChips.appendChild(button);
+    });
+    activeFilters.hidden = selected.length === 0;
+  }
+  if (activeChips) activeChips.addEventListener("click", function (event) {
+    var button = event.target.closest("[data-remove-filter]");
+    if (!button) return;
+    var key = button.dataset.removeFilter;
+    if (key === "q") {
+      search.value = "";
+      if (headerSearch) headerSearch.value = "";
+    } else if (key === "category") category = "";
+    else if (key === "sort") sort.value = "default";
+    else if (key === "no-card") noCard.checked = false;
+    else if (key === "commercial") commercial.checked = false;
+    visible = pageSize;
+    render();
+    var next = activeChips.querySelector("button");
+    (next || search).focus();
+  });
   function render() {
     syncURL();
     document.querySelectorAll("[data-quick-filter]").forEach(function (button) {
@@ -241,6 +285,9 @@
     if (mobileCategory && mobileCategory.value !== category) {
       mobileCategory.value = category;
     }
+    updateFilterCount();
+    renderActiveFilters();
+    if (showResults) showResults.textContent = "Show results (" + matched.length + ")";
   }
   function changeCategory(next) {
     category = next;
@@ -268,6 +315,31 @@
     visible = pageSize; render();
     document.getElementById("explore").scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   });
+  // Move the existing category/sort controls into the panel on compact screens.
+  // One set of controls retains URL state, values and event listeners on resize.
+  if (advancedFilters && mobileCategory && sort && window.matchMedia) {
+    var controlHomes = [mobileCategory, sort].map(function (control) {
+      var label = control.closest("label");
+      var home = document.createComment("expanded filter position");
+      label.parentNode.insertBefore(home, label);
+      return { label: label, home: home };
+    });
+    var compactControls = window.matchMedia("(max-width: 980px)");
+    function placeCompactControls() {
+      controlHomes.forEach(function (item) {
+        if (compactControls.matches) advancedFilters.insertBefore(item.label, advancedFilters.querySelector("label:has(input[type=checkbox])"));
+        else item.home.parentNode.insertBefore(item.label, item.home.nextSibling);
+      });
+      if (!compactControls.matches) {
+        advancedFilters.hidden = true;
+        filterToggle.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("filter-sheet-open");
+      }
+    }
+    placeCompactControls();
+    if (compactControls.addEventListener) compactControls.addEventListener("change", placeCompactControls);
+    else compactControls.addListener(placeCompactControls);
+  }
   if (filterToggle && advancedFilters) {
     var sheetHeading = advancedFilters.querySelector(".filter-popover-heading");
     var closeSheetButton = document.createElement("button");
@@ -313,6 +385,7 @@
         closeSheetButton.focus();
       }
     }
+    if (showResults) showResults.addEventListener("click", function () { closeFilters(true); });
     closeSheetButton.addEventListener("click", function () { closeFilters(true); });
     sheetBackdrop.addEventListener("click", function () { closeFilters(true); });
     document.addEventListener("keydown", function (event) {
