@@ -15,6 +15,8 @@ test('directory exposes unique search/category controls and official sources for
       assert.ok(page.includes(`<meta property="og:image" content="${imageURL}">`));
       assert.ok(page.includes(`<meta name="twitter:image" content="${imageURL}">`));
       assert.match(page, /name="twitter:card" content="summary_large_image"/);
+      assert.ok(page.includes('id="header-search-form" role="search" method="get" action="https://free-tier.eplus.dev/#explore"'));
+      assert.match(page, /id="header-search" name="q" type="search"/);
     }
     const png = fs.readFileSync(path.join(output, 'assets/og-image.png'));
     assert.equal(png.subarray(1, 4).toString(), 'PNG');
@@ -73,4 +75,41 @@ test('URL filters round trip, reject unknown values, preserve unrelated params a
   assert.equal(reset.search, '?utm_source=test');
   assert.deepEqual(api.read('https://free-tier.eplus.dev/?category=bad&sort=bad&no_card=0&commercial=false', [''], ['default']),
     {q:'', category:'', sort:'default', noCard:false, commercial:false});
+});
+
+test('header search opens and keyboard shortcuts work without a directory grid', async () => {
+  const { runInNewContext } = await import('node:vm');
+  function element() {
+    return { hidden: true, attrs: {}, listeners: {}, value: '',
+      addEventListener(type, fn) { (this.listeners[type] ||= []).push(fn); },
+      setAttribute(key, value) { this.attrs[key] = value; },
+      focus() { this.focused = true; }, select() { this.selected = true; },
+      contains(target) { return target === this; }
+    };
+  }
+  const toggle = element(), panel = element(), input = element(), form = element();
+  const elements = { 'header-search-toggle': toggle, 'header-search-panel': panel,
+    'header-search': input, 'header-search-form': form };
+  const document = { ...element(), documentElement: { setAttribute() {}, style: { setProperty() {} } },
+    getElementById(id) { return elements[id] || null; }, querySelector() { return null; }, querySelectorAll() { return []; } };
+  const window = { addEventListener() {}, localStorage: { getItem() { return null; } },
+    matchMedia() { return { matches: false }; }, location: { href: 'https://free-tier.eplus.dev/service/vercel/' } };
+  runInNewContext(fs.readFileSync(new URL('../site/assets/site.js', import.meta.url), 'utf8'), { document, window });
+  toggle.listeners.click[0]();
+  assert.equal(panel.hidden, false);
+  assert.equal(toggle.attrs['aria-expanded'], 'true');
+  assert.ok(input.focused);
+  assert.equal(window.location.href, 'https://free-tier.eplus.dev/service/vercel/');
+  input.value = 'cloud & AI';
+  form.listeners.submit[0]({ preventDefault() { assert.fail('detail page must keep native GET submission'); } });
+  for (const key of ['/', 'k']) {
+    panel.hidden = true;
+    let prevented = false;
+    document.listeners.keydown.forEach(fn => fn({ key, ctrlKey: key === 'k', target: { tagName: 'BODY' },
+      preventDefault() { prevented = true; } }));
+    assert.equal(panel.hidden, false);
+    assert.ok(prevented);
+  }
+  document.listeners.keydown.forEach(fn => fn({ key: 'Escape', preventDefault() {} }));
+  assert.equal(panel.hidden, true);
 });
