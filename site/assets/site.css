@@ -342,3 +342,8 @@ html.js-enabled .service-card[data-paged-hidden=true]{display:none}
 .service-card .allowance-block{margin-bottom:0;border-radius:7px 7px 0 0}
 .service-card .card-bottom{margin-top:16px}
 @media(max-width:680px){.service-card .allowance-block,.service-card .restriction-block{background:transparent;padding:0;margin-bottom:12px}.service-card .card-bottom{margin-top:auto}.active-filter-chip>span:first-child{max-width:180px}}
+
+/* Consistent sizing for the locally bundled Font Awesome SVG subset. */
+.fa-icon{display:inline-block;width:1em;height:1em;flex-shrink:0;vertical-align:-.125em;fill:currentColor}
+.theme-toggle .fa-icon,.menu-toggle .fa-icon,.header-search-toggle .fa-icon{width:18px;height:18px}
+.active-filter-chip .fa-icon{width:10px;height:12px}
