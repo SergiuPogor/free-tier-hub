@@ -20,6 +20,11 @@ test('directory exposes unique search/category controls and official sources for
     assert.equal(png.subarray(1, 4).toString(), 'PNG');
     assert.equal(png.readUInt32BE(16), 1200);
     assert.equal(png.readUInt32BE(20), 630);
+    for (const svg of html.match(/<svg\b[^>]*>/g) || []) assert.match(svg, /data-fa-icon=/);
+    assert.match(html, /data-fa-icon="moon"/);
+    assert.match(html, /data-fa-icon="sun"/);
+    assert.match(html, /data-fa-icon="filters"/);
+    assert.ok(fs.existsSync(path.join(output, 'assets/fontawesome-LICENSE.txt')));
     const raw = JSON.parse(fs.readFileSync(new URL('../data/services.json', import.meta.url), 'utf8'));
     const entries = Array.isArray(raw) ? raw : raw.services;
     assert.equal(result.service_count, entries.length);

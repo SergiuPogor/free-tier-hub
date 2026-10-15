@@ -6,8 +6,10 @@ import { fileURLToPath } from 'node:url';
 import { CATEGORIES, validateData } from './catalog.mjs';
 import {
   CATEGORY_NAMES, CATEGORY_LABELS, PLAN_NAMES, CARD_NAMES, COMMERCIAL_NAMES,
-  ICON_PATHS, CATEGORY_ICONS, SERVICE_LOGO_DOMAINS,
+  CATEGORY_ICONS, SERVICE_LOGO_DOMAINS,
 } from './site-data.mjs';
+
+import { FONT_AWESOME_ICONS } from './fontawesome.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const DEFAULT_URL = 'https://free-tier.eplus.dev/';
@@ -33,11 +35,13 @@ const file = (output, relative, content) => {
   fs.mkdirSync(path.dirname(target), { recursive: true });
   fs.writeFileSync(target, content);
 };
-const glyph = name =>
-  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" ' +
-  'fill="none" stroke="currentColor" stroke-width="1.8" ' +
-  'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' +
-  ICON_PATHS[name] + '</svg>';
+const glyph = name => {
+  const icon = FONT_AWESOME_ICONS[name];
+  if (!icon) throw new Error('Unknown Font Awesome icon: ' + name);
+  return '<svg xmlns="http://www.w3.org/2000/svg" class="fa-icon" data-fa-icon="' + name +
+    '" viewBox="' + icon.viewBox + '" fill="currentColor" aria-hidden="true" focusable="false">' +
+    '<!-- Font Awesome Free 6.7.2 by @fontawesome — https://fontawesome.com; CC BY 4.0 -->' + icon.body + '</svg>';
+};
 const monogram = name => (String(name).match(/[A-Za-z0-9]+/g) || []).slice(0, 2)
   .map(word => word[0]).join('').toUpperCase() || 'FT';
 export function serviceLogoURL(item) {
@@ -136,13 +140,12 @@ function document(absolute, title, description, relative, content, structuredDat
     'data-directory-url="', tag(absolute('#explore')), '">', glyph('search'), '</button>',
     '<button class="theme-toggle" id="theme-toggle" type="button" ',
     'aria-label="Switch to dark appearance" aria-pressed="false" title="Dark mode">',
-    glyph('moon'), '</button>',
+    glyph('moon'), glyph('sun'), '</button>',
     '<a class="github-button" href="', tag(REPOSITORY + '/issues/new/choose'),
-    '" rel="noopener noreferrer">', glyph('code'), 'GitHub</a>',
+    '" rel="noopener noreferrer">', glyph('github'), 'GitHub</a>',
     '<button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" ',
     'aria-controls="primary-nav" aria-label="Open navigation">',
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">',
-    '<path d="M4 6h16M4 12h16M4 18h16"/></svg></button></div></div>',
+    glyph('menu'), '</button></div></div>',
     '<div class="header-search-panel" id="header-search-panel" hidden>',
     '<div class="container header-search-inner">',
     '<label class="sr-only" for="header-search">Search free tiers</label>',
@@ -168,10 +171,7 @@ function document(absolute, title, description, relative, content, structuredDat
     '</div></div></footer>',
     '<button class="back-to-top" id="back-to-top" type="button" ',
     'aria-label="Back to top" title="Back to top" hidden>',
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" ',
-    'fill="none" stroke="currentColor" stroke-width="2" ',
-    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">',
-    '<path d="m6 14 6-6 6 6"/><path d="M12 8v12"/></svg>',
+    glyph('up'),
     '</button></body></html>',
   ].join('');
 }
@@ -210,9 +210,10 @@ function homePage(items, absolute, counts) {
     '<div class="filter-popover-wrap">',
     '<button class="advanced-filter-toggle" id="advanced-filter-toggle" type="button" ',
     'aria-expanded="false" aria-controls="advanced-filters">',
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="2" fill="var(--surface)"/><circle cx="15" cy="17" r="2" fill="var(--surface)"/></svg>', ' <span>Filters</span><span id="active-filter-count" class="active-filter-count" hidden>0</span></button>',
+    glyph('filters'), ' <span>Filters</span><span id="active-filter-count" class="active-filter-count" hidden>0</span></button>',
     '<div class="filter-checks" id="advanced-filters" role="group" aria-label="Additional filters" hidden>',
-    '<div class="filter-popover-heading"><strong>Refine results</strong><span>Only show services that match</span></div>',
+    '<div class="filter-popover-heading"><strong>Refine results</strong><span>Only show services that match</span>',
+    '<button class="filter-sheet-close" type="button" aria-label="Close filters">', glyph('close'), '</button></div>',
     '<label><input id="filter-no-card" type="checkbox"><span class="filter-option-copy">',
     '<strong>No credit card</strong><small>Start without adding a payment card</small></span></label>',
     '<label><input id="filter-commercial" type="checkbox"><span class="filter-option-copy">',
@@ -420,7 +421,7 @@ export function build(outputDir = path.join(ROOT, 'dist'), siteURL = DEFAULT_URL
   ];
   file(output, 'agents.md', agents.join('\n') + '\n');
   file(output, 'catalog.json', JSON.stringify(items, null, 2) + '\n');
-  for (const name of ['site.css', 'directory-url.js', 'site.js', 'icon.svg', 'og-image.png', 'og-image.svg']) {
+  for (const name of ['site.css', 'directory-url.js', 'site.js', 'icon.svg', 'og-image.png', 'og-image.svg', 'fontawesome-LICENSE.txt']) {
     const dest = path.join(output, 'assets', name);
     fs.mkdirSync(path.dirname(dest), { recursive: true });
     fs.copyFileSync(path.join(ROOT, 'site/assets', name), dest);
